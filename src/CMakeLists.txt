@@ -12,9 +12,14 @@ target_compile_features(tuc PUBLIC c_std_11)
 set(_headers 
 	include/tuc/tuc.h
 	include/tuc/print.h)
+set_target_properties(tuc PROPERTIES
+				PUBLIC_HEADER "${_headers}")
 target_sources(tuc PRIVATE
 				tuc.c
 				print.c
 				${_headers}
 				)
-				
+install(TARGETS tuc
+			RUNTIME DESTINATION lib
+			PUBLIC_HEADER DESTINATION include/tuc
+			)
