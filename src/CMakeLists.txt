@@ -11,4 +11,4 @@ target_compile_features(tuc PUBLIC c_std_11)
 
 target_sources(tuc PRIVATE
 				test.c
-				include/tuc/test.h)
+				include/tuc/tuc.h)
