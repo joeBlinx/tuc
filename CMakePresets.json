@@ -31,5 +31,11 @@
 			"configurePreset": "default",
 			"configuration": "Release"
 		}
+	],
+	"testPresets":[
+		 {
+			"name":"default",
+			"configurePreset":"default"
+		 }
 	]
 }
