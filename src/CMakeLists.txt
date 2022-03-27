@@ -1,12 +1,15 @@
 add_library(tuc SHARED)
 add_library(tuc::tuc ALIAS tuc)
 
-
+include(GNUInstallDirs)
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL AppleClang OR CMAKE_C_COMPILER_ID STREQUAL Clang)
 	target_compile_options(tuc PRIVATE -Wall -Wextra)
 endif()
 
-target_include_directories(tuc PUBLIC include PRIVATE include/tuc)
+target_include_directories(tuc 
+					PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+						   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+					PRIVATE include/tuc)
 target_compile_features(tuc PUBLIC c_std_11)
 
 set(_headers 
@@ -20,6 +23,11 @@ target_sources(tuc PRIVATE
 				${_headers}
 				)
 install(TARGETS tuc
+		EXPORT tucTargets
 			RUNTIME DESTINATION lib
-			PUBLIC_HEADER DESTINATION include/tuc
+			PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/tuc
 			)
+install(EXPORT  tucTargets
+		FILE tucTargets.cmake
+		NAMESPACE tuc::
+		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
