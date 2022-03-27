@@ -16,7 +16,9 @@ set(_headers
 	include/tuc/tuc.h
 	include/tuc/print.h)
 set_target_properties(tuc PROPERTIES
-				PUBLIC_HEADER "${_headers}")
+				PUBLIC_HEADER "${_headers}"
+				VERSION ${PROJECT_VERSION}
+				)
 target_sources(tuc PRIVATE
 				tuc.c
 				print.c
@@ -31,3 +33,17 @@ install(EXPORT  tucTargets
 		FILE tucTargets.cmake
 		NAMESPACE tuc::
 		DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
+include(CMakePackageConfigHelpers)
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Config.cmake.in
+			${CMAKE_CURRENT_BINARY_DIR}/tucConfig.cmake
+			INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake
+)
+write_basic_package_version_file(
+	${CMAKE_CURRENT_BINARY_DIR}/tucConfigVersion.cmake
+	VERSION ${PROJECT_VERSION}
+	COMPATIBILITY AnyNewerVersion
+	)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tucConfig.cmake 
+				${CMAKE_CURRENT_BINARY_DIR}/tucConfigVersion.cmake
+				DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
