@@ -6,5 +6,5 @@ TEST(FirstTU) {
 }
 int main(void) {
   REGISTER(FirstTU);
-  return run_all_test();
+  return run_all_tests();
 }

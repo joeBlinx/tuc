@@ -20,7 +20,7 @@ extern int test_passed;
 extern int test_failed;
 extern TestFunction unit_test[100];
 extern int number_test;
-bool run_all_test();
+bool run_all_tests();
 #define COLOR "\033["
 #define RED COLOR "31m"
 #define GREEN COLOR "32m"
