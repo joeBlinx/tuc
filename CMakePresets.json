@@ -19,6 +19,15 @@
 			"name":"default",
 			"inherits":"base",
 			"generator": "Ninja Multi-Config"
+		},
+		{
+			"name": "install",
+			"generator": "Unix Makefiles",
+			"binaryDir":"build-${presetName}",
+			"cacheVariables":{
+				"CMAKE_BUILD_TYPE":"Release",
+				"CMAKE_INSTALL_PREFIX":"build-${presetName}/install"
+			}
 		}
 	],
 	"buildPresets":	[
@@ -44,6 +53,10 @@
 		 {
 			"name":"default",
 			"configurePreset":"default"
-		 }
+		 },
+		{
+			"name":"install",
+			"configurePreset":"install"
+		}
 	]
 }
