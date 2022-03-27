@@ -10,5 +10,5 @@ target_include_directories(tuc PUBLIC include)
 target_compile_features(tuc PUBLIC c_std_11)
 
 target_sources(tuc PRIVATE
-				test.c
+				tuc.c
 				include/tuc/tuc.h)
