@@ -1,6 +1,6 @@
 #include "print.h"
-#include <stddef.h>
 #include <stdio.h>
+#include <stddef.h>
 void print_int_int(int a, char const *op, int b) {
   printf("%d %s %d\n", a, op, b);
 }

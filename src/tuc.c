@@ -66,12 +66,15 @@ void free(void *ptr) {
 }
 #endif
 TEST(MemCheck) {
-  REQUIRE_OP(nb_malloc, ==, nb_free, "Nb Free %d, Nb Malloc %d\n", nb_free, nb_malloc);
-  REQUIRE_OP(pointers_store.bytes_allocated, ==, 0,"Memory not freed %ld\n", pointers_store.bytes_allocated);
+  REQUIRE_OP(nb_malloc, ==, nb_free, "Nb Free %d, Nb Malloc %d\n", nb_free,
+             nb_malloc);
+  REQUIRE_OP(pointers_store.bytes_allocated, ==, 0, "Memory not freed %ld\n",
+             pointers_store.bytes_allocated);
 }
 
 bool run_all_tests() {
-  free(malloc(1)); // here to force the alloc of stdout buffer, thus it will not count in nb_alloc and nb_free
+  free(malloc(1)); // here to force the alloc of stdout buffer, thus it will
+                   // not count in nb_alloc and nb_free
   REGISTER(MemCheck);
   for (int test = 0; test < number_test; test++) {
     int failed = test_failed;

@@ -4,14 +4,10 @@
  */
 #ifndef TEST_HEADER
 #define TEST_HEADER
+#include "tuc/print.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-void print_int_int(int a, char const *op, int b);
-void print_size_t_size_t(size_t a, char const *op, size_t b);
-void print_int_size_t(int a, char const *op, size_t b);
-void print_size_t_int(size_t a, char const *op, int b);
-void print_int_int(int a, char const *op, int b);
 typedef struct TestFunction {
   void (*test)();
   char *name;
@@ -21,15 +17,6 @@ extern int test_failed;
 extern TestFunction unit_test[100];
 extern int number_test;
 bool run_all_tests();
-#define COLOR "\033["
-#define RED COLOR "31m"
-#define GREEN COLOR "32m"
-#define DEFAULT COLOR "0m"
-#define print(...)                                                             \
-  do {                                                                         \
-    printf(__VA_ARGS__);                                                       \
-    fputs(DEFAULT, stdout);                                                    \
-  } while (0)
 #define TEST(A) void test##A(const char *test_name)
 
 #define GET_N_ARGS(_1, _2, _3, _4, _5, N, ...) N
