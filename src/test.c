@@ -29,15 +29,10 @@ static int nb_malloc = 0;
 static int nb_free = 0;
 TestFunction unit_test[100] = {0};
 int number_test = 0;
-static size_t bytes_allocated = 0;
 static void add_new_pointer(void *ptr, size_t bytes) {
   pointers_store.bytes_allocated += bytes;
   pointers_store.pointers[pointers_store.index_max++] =
       (struct Pointer){.allocated = bytes, .ptr = ptr};
-  if (bytes == 1024) {
-    int a = 0;
-    int b = a;
-  }
 }
 static void remove_pointer(void *ptr) {
   int index = 0;

@@ -55,12 +55,17 @@ bool run_all_test();
     OVERRIDE(__VA_ARGS__, REGISTER4, REGISTER3, REGISTER2, REGISTER1)          \
     (__VA_ARGS__);                                                             \
   } while (0)
-  static void dummy_print(int a, char const* b, int c){}
+static inline void dummy_print(int a, char const *b, int c) {
+  (void)a;
+  (void)b;
+  (void)c;
+}
+
 #define _REQUIRE(COND, PrintFunction, A, Op, B, ...)                           \
   do {                                                                         \
     if (!(COND)) {                                                             \
       print(RED "===== Test %s failed =====\n", test_name);                    \
-      printf("condition " RED #COND DEFAULT " not passed, %s:%d\n", __FILE__,    \
+      printf("condition " RED #COND DEFAULT " not passed, %s:%d\n", __FILE__,  \
              __LINE__);                                                        \
       if (strcmp(Op, "")) {                                                    \
         PrintFunction(A, Op, B);                                               \
@@ -72,10 +77,15 @@ bool run_all_test();
     }                                                                          \
   } while (0)
 #define REQUIRE(COND, ...) _REQUIRE(COND, dummy_print, 0, "", 0, __VA_ARGS__)
-#define PrintOp(A, B) _Generic((A), \
-		int : _Generic((B), int : print_int_int, size_t: print_int_size_t), \
-		size_t: _Generic((B), size_t: print_size_t_size_t, int: print_size_t_int) \
-		)
+#define PrintOp(A, B)                                                          \
+  _Generic((A), int                                                            \
+           : _Generic((B), int                                                 \
+                      : print_int_int, size_t                                  \
+                      : print_int_size_t),                                     \
+             size_t                                                            \
+           : _Generic((B), size_t                                              \
+                      : print_size_t_size_t, int                               \
+                      : print_size_t_int))
 #define REQUIRE_OP(A, Op, B, ...)                                              \
   _REQUIRE((A Op B), PrintOp(A, B), A, #Op, B, __VA_ARGS__);
 #endif
