@@ -1,4 +1,4 @@
-#include "test.h"
+#include "tuc/test.h"
 
 void print_int_int(int a, char const *op, int b) {
   printf("%d %s %d\n", a, op, b);
