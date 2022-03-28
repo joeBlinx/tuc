@@ -31,6 +31,13 @@
 			"name":"release",
 			"configurePreset": "default",
 			"configuration": "Release"
+		},
+		{
+			"name":"install",
+			"configurePreset":"install",
+			"targets":[
+			"install"
+			]
 		}
 	],
 	"testPresets":[
