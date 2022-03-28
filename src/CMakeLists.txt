@@ -4,6 +4,9 @@ add_library(tuc::tuc ALIAS tuc)
 include(GNUInstallDirs)
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL AppleClang OR CMAKE_C_COMPILER_ID STREQUAL Clang)
 	target_compile_options(tuc PRIVATE -Wall -Wextra)
+	if(CMAKE_C_COMPILER_ID STREQUAL Clang)
+		target_link_options(tuc PRIVATE -stdlib=libstdc)
+	endif()
 endif()
 
 target_include_directories(tuc 
