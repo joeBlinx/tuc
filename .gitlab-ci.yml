@@ -20,12 +20,25 @@ build-gcc:
   extends: 
     - .build-script
 
-test-package:
+test-package-gcc:
   image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
   extends: 
     - .test-script
   needs:
     - job: build-gcc
+      artifacts: true
+
+build-clang:
+  image: registry.gitlab.com/joeblinx/tuc/clang-cmake:1.0
+  extends: 
+    - .build-script
+
+test-package-clang:
+  image: registry.gitlab.com/joeblinx/tuc/clang-cmake:1.0
+  extends: 
+    - .test-script
+  needs:
+    - job: build-clang
       artifacts: true
 
 stages:
