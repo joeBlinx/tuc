@@ -6,7 +6,9 @@
     - ctest --preset install
   artifacts:
     paths: 
+      - build-install/TUC-*.tar.gz
       - build-install/install
+      - build-install/TUC-0.0.1-*.sh
     expire_in: 30 min
 
 .test-script:

@@ -45,7 +45,7 @@
 			"name":"install",
 			"configurePreset":"install",
 			"targets":[
-			"install"
+			"install", "package"
 			]
 		}
 	],
