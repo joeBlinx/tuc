@@ -1,5 +1,4 @@
-build-gcc:
-  image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
+.build-script:
   stage: build
   script:
     - cmake --preset install
@@ -10,12 +9,21 @@ build-gcc:
       - build-install/install
     expire_in: 30 min
 
-test-package:
-  image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
+.test-script:
   stage: test
   script:
     - cmake -S test/export -B build -DINSTALL_DIR=$PWD/build-install/install
     - cmake --build build
+
+build-gcc:
+  image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
+  extends: 
+    - .build-script
+
+test-package:
+  image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
+  extends: 
+    - .test-script
   needs:
     - job: build-gcc
       artifacts: true
