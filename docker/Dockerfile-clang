@@ -1,0 +1,7 @@
+FROM debian:11
+RUN apt-get update && apt-get install -y clang make python3-pip lld \ 
+&& rm -rf /var/lib/apt/lists/*
+RUN pip install cmake
+RUN ln -sf /usr/bin/clang /usr/bin/cc \
+&& ln -sf /usr/bin/lld /usr/bin/ld
+
