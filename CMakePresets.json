@@ -52,11 +52,13 @@
 	"testPresets":[
 		 {
 			"name":"default",
-			"configurePreset":"default"
+			"configurePreset":"default",
+			"output":{ "outputOnFailure":true}
 		 },
 		{
 			"name":"install",
-			"configurePreset":"install"
+			"configurePreset":"install",
+			"output": {"outputOnFailure":true}
 		}
 	]
 }

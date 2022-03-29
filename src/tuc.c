@@ -1,70 +1,9 @@
 #include "tuc/tuc.h"
-
-struct Pointer {
-  size_t allocated;
-  void *ptr;
-};
-struct PointersStore {
-  int index_max;
-  struct Pointer pointers[100];
-  size_t bytes_allocated;
-};
-static struct PointersStore pointers_store = {.index_max = 0,
-                                              .bytes_allocated = 0};
+#include "tuc/allocator.h"
 int test_passed = 0;
 int test_failed = 0;
-static int nb_malloc = 0;
-static int nb_free = 0;
 TestFunction unit_test[100] = {0};
 int number_test = 0;
-static void add_new_pointer(void *ptr, size_t bytes) {
-  pointers_store.bytes_allocated += bytes;
-  pointers_store.pointers[pointers_store.index_max++] =
-      (struct Pointer){.allocated = bytes, .ptr = ptr};
-}
-static void remove_pointer(void *ptr) {
-  int index = 0;
-  while (index < pointers_store.index_max &&
-         ptr != pointers_store.pointers[index].ptr) {
-    index++;
-  }
-  if (index == pointers_store.index_max) {
-    return;
-  }
-  pointers_store.bytes_allocated -= pointers_store.pointers[index].allocated;
-  for (int i = index; i < pointers_store.index_max; i++) {
-    pointers_store.pointers[i] = pointers_store.pointers[i + 1];
-  }
-}
-#ifdef __GNUC__
-static bool use_custom = true;
-extern void *__libc_malloc(size_t size);
-extern void __libc_free(void *ptr);
-void *my_malloc(size_t bytes) {
-  static bool first_time = true;
-  if (first_time) {
-    use_custom = false;
-    puts("Beginning of Test");
-    use_custom = true;
-    first_time = false;
-  }
-  void *ptr = __libc_malloc(bytes);
-  add_new_pointer(ptr, bytes);
-  nb_malloc += 1;
-  return ptr;
-}
-void *malloc(size_t bytes) {
-  if (use_custom) {
-    return my_malloc(bytes);
-  }
-  return __libc_malloc(bytes);
-}
-void free(void *ptr) {
-  remove_pointer(ptr);
-  nb_free += 1;
-  __libc_free(ptr);
-}
-#endif
 TEST(MemCheck) {
   REQUIRE_OP(nb_malloc, ==, nb_free, "Nb Free %d, Nb Malloc %d\n", nb_free,
              nb_malloc);

@@ -17,7 +17,8 @@ target_compile_features(tuc PUBLIC c_std_11)
 
 set(_headers 
 	include/tuc/tuc.h
-	include/tuc/print.h)
+	include/tuc/print.h
+	include/tuc/allocator.h)
 set_target_properties(tuc PROPERTIES
 				PUBLIC_HEADER "${_headers}"
 				VERSION ${PROJECT_VERSION}
@@ -25,6 +26,7 @@ set_target_properties(tuc PROPERTIES
 target_sources(tuc PRIVATE
 				tuc.c
 				print.c
+				allocator.c
 				${_headers}
 				)
 install(TARGETS tuc
