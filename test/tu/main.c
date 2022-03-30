@@ -4,7 +4,4 @@ TEST(FirstTU) {
   int b = 2;
   REQUIRE_OP(a, !=, b);
 }
-int main(void) {
-  REGISTER(FirstTU);
-  return run_all_tests();
-}
+int main(void) { return run_all_tests(); }

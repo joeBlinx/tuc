@@ -18,7 +18,18 @@ TUC_EXPORT extern int test_failed;
 TUC_EXPORT extern TestFunction unit_test[100];
 TUC_EXPORT extern int number_test;
 TUC_EXPORT bool run_all_tests();
-#define TEST(A) void test##A(const char *test_name)
+#ifdef __GNUC__
+#define CTOR __attribute__((constructor))
+#else
+#define CTOR
+#endif
+#define TEST(A)                                                                \
+  void test##A(const char *test_name);                                         \
+  CTOR void register_##A() {                                                   \
+    unit_test[number_test++] =                                                 \
+        (TestFunction){.test = test##A, .name = STRINGIFY(A)};                 \
+  }                                                                            \
+  void test##A(const char *test_name)
 
 #define STRINGIFY(A) #A
 #define REGISTER(A)                                                            \

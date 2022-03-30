@@ -4,7 +4,7 @@ int test_passed = 0;
 int test_failed = 0;
 TestFunction unit_test[100] = {0};
 int number_test = 0;
-TEST(MemCheck) {
+void testMemCheck(const char *test_name) {
   REQUIRE_OP(nb_malloc, ==, nb_free, "Nb Free %d, Nb Malloc %d\n", nb_free,
              nb_malloc);
   REQUIRE_OP(pointers_store.bytes_allocated, ==, 0, "Memory not freed %ld\n",
@@ -17,6 +17,7 @@ bool run_all_tests() {
   REGISTER(MemCheck);
   for (int test = 0; test < number_test; test++) {
     int failed = test_failed;
+    print("Launch test: %s\n", unit_test[test].name);
     unit_test[test].test(unit_test[test].name);
     if (failed == test_failed) {
       test_passed += 1;
