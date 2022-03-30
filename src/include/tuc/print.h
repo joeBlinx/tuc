@@ -14,3 +14,5 @@ TUC_EXPORT void print_int_int(int a, char const *op, int b);
 TUC_EXPORT void print_size_t_size_t(size_t a, char const *op, size_t b);
 TUC_EXPORT void print_int_size_t(int a, char const *op, size_t b);
 TUC_EXPORT void print_size_t_int(size_t a, char const *op, int b);
+TUC_EXPORT void print_double_size_t(double a, char const *op, size_t b);
+TUC_EXPORT void print_size_t_double(size_t a, char const *op, double b);
