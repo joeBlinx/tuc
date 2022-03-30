@@ -42,10 +42,24 @@
 			"configuration": "Release"
 		},
 		{
+			"name":"build-ci",
+			"configurePreset":"install",
+			"targets":[
+			"install"
+			]
+		},
+		{
 			"name":"install",
 			"configurePreset":"install",
 			"targets":[
-			"install", "package"
+			"install"
+			]
+		},
+		{
+			"name":"package",
+			"configurePreset":"install",
+			"targets":[
+				 "package"
 			]
 		}
 	],

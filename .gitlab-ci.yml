@@ -2,18 +2,21 @@
   stage: build
   script:
     - cmake --preset install
-    - cmake --build --preset install
-    - ctest --preset install
+    - cmake --build --preset build-ci
   artifacts:
     paths: 
-      - build-install/TUC-*.tar.gz
-      - build-install/install
-      - build-install/TUC-0.0.1-*.sh
+      - build-install/
     expire_in: 30 min
 
-.test-script:
+.test-tu-script:
   stage: test
   script:
+    - ctest --preset install
+
+.test-package-script:
+  stage: test
+  script:
+    - cmake --build --preset install
     - cmake -S test/export -B build -DINSTALL_DIR=$PWD/build-install/install
     - cmake --build build
 
@@ -22,10 +25,18 @@ build-gcc:
   extends: 
     - .build-script
 
+test-tu-gcc:
+  image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
+  extends: 
+    - .test-tu-script
+  needs:
+    - job: build-gcc
+      artifacts: true
+
 test-package-gcc:
   image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
   extends: 
-    - .test-script
+    - .test-package-script
   needs:
     - job: build-gcc
       artifacts: true
@@ -38,11 +49,18 @@ build-clang:
 test-package-clang:
   image: registry.gitlab.com/joeblinx/tuc/clang-cmake:1.0
   extends: 
-    - .test-script
+    - .test-package-script
   needs:
     - job: build-clang
       artifacts: true
 
+test-tu-clang:
+  image: registry.gitlab.com/joeblinx/tuc/clang-cmake:1.0
+  extends: 
+    - .test-tu-script
+  needs:
+    - job: build-clang
+      artifacts: true
 stages:
   - build
   - test
