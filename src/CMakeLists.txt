@@ -2,6 +2,8 @@ add_library(tuc SHARED)
 add_library(tuc::tuc ALIAS tuc)
 
 include(GNUInstallDirs)
+include(GenerateExportHeader)
+generate_export_header(tuc EXPORT_FILE_NAME tuc/tuc_export.h)
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_C_COMPILER_ID STREQUAL AppleClang OR CMAKE_C_COMPILER_ID STREQUAL Clang)
 	target_compile_options(tuc PRIVATE -Wall -Wextra)
 	if(CMAKE_C_COMPILER_ID STREQUAL Clang)
@@ -11,17 +13,23 @@ endif()
 
 target_include_directories(tuc 
 					PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+						   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 						   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 					PRIVATE include/tuc)
 target_compile_features(tuc PUBLIC c_std_11)
+target_compile_definitions(tuc PRIVATE tuc_EXPORTS)
 
 set(_headers 
+	${CMAKE_CURRENT_BINARY_DIR}/tuc/tuc_export.h
 	include/tuc/tuc.h
 	include/tuc/print.h
 	include/tuc/allocator.h)
+
 set_target_properties(tuc PROPERTIES
 				PUBLIC_HEADER "${_headers}"
 				VERSION ${PROJECT_VERSION}
+				VISIBILITY_INLINES_HIDDEN YES
+				C_VISIBILITY_PRESET hidden
 				)
 target_sources(tuc PRIVATE
 				tuc.c

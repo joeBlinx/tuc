@@ -5,6 +5,7 @@
 #ifndef TEST_HEADER
 #define TEST_HEADER
 #include "tuc/print.h"
+#include "tuc/tuc_export.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,11 +13,11 @@ typedef struct TestFunction {
   void (*test)();
   char *name;
 } TestFunction;
-extern int test_passed;
-extern int test_failed;
-extern TestFunction unit_test[100];
-extern int number_test;
-bool run_all_tests();
+TUC_EXPORT extern int test_passed;
+TUC_EXPORT extern int test_failed;
+TUC_EXPORT extern TestFunction unit_test[100];
+TUC_EXPORT extern int number_test;
+TUC_EXPORT bool run_all_tests();
 #define TEST(A) void test##A(const char *test_name)
 
 #define STRINGIFY(A) #A
