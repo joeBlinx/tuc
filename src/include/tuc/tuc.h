@@ -19,29 +19,11 @@ extern int number_test;
 bool run_all_tests();
 #define TEST(A) void test##A(const char *test_name)
 
-#define GET_N_ARGS(_1, _2, _3, _4, _5, N, ...) N
-#define COUNT_ARGS(...) GET_N_ARGS(__VA_ARGS__, 5, 4, 3, 2, 1)
 #define STRINGIFY(A) #A
-#define OVERRIDE(_1, _2, _3, _4, N, ...) N
-#define REGISTER1(A)                                                           \
+#define REGISTER(A)                                                            \
   unit_test[number_test++] = (TestFunction) {                                  \
     .test = test##A, .name = STRINGIFY(A)                                      \
   }
-#define REGISTER2(A, B)                                                        \
-  REGISTER1(A);                                                                \
-  REGISTER1(B)
-#define REGISTER3(A, B, C)                                                     \
-  REGISTER2(A, B);                                                             \
-  REGISTER1(C)
-#define REGISTER4(A, B, C, D)                                                  \
-  REGISTER3(A, B, C);                                                          \
-  REGISTER1(D)
-
-#define REGISTER(...)                                                          \
-  do {                                                                         \
-    OVERRIDE(__VA_ARGS__, REGISTER4, REGISTER3, REGISTER2, REGISTER1)          \
-    (__VA_ARGS__);                                                             \
-  } while (0)
 static inline void dummy_print(int a, char const *b, int c) {
   (void)a;
   (void)b;
