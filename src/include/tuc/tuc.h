@@ -1,7 +1,3 @@
-/**
- * ATTENTION: Vous n'avez en aucun cas le droit de toucher à ce fichier.
- * Une modification de ce ficher sera sanctionné par une note nulle !
- */
 #ifndef TEST_HEADER
 #define TEST_HEADER
 #include "tuc/print.h"
