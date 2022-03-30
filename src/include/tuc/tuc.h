@@ -60,13 +60,9 @@ static inline void dummy_print(int a, char const *b, int c) {
 #define REQUIRE(COND, ...) _REQUIRE(COND, dummy_print, 0, "", 0, __VA_ARGS__)
 #define PrintOp(A, B)                                                          \
   _Generic((A), int                                                            \
-           : _Generic((B), int                                                 \
-                      : print_int_int, size_t                                  \
-                      : print_int_size_t),                                     \
-             size_t                                                            \
-           : _Generic((B), size_t                                              \
-                      : print_size_t_size_t, int                               \
-                      : print_size_t_int))
+           : GENERIC((B), int, int, size_t, double), size_t                    \
+           : GENERIC((B), size_t, size_t, int, double), double                 \
+           : GENERIC((B), double, size_t, int, double))
 #define REQUIRE_OP(A, Op, B, ...)                                              \
   _REQUIRE((A Op B), PrintOp(A, B), A, #Op, B, __VA_ARGS__);
 #endif
