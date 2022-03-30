@@ -3,6 +3,8 @@
   script:
     - cmake --preset install
     - cmake --build --preset build-ci
+    - cmake --build --preset install
+    - cmake --build --preset package
   artifacts:
     paths: 
       - build-install/
@@ -16,9 +18,11 @@
 .test-package-script:
   stage: test
   script:
-    - cmake --build --preset install
     - cmake -S test/export -B build -DINSTALL_DIR=$PWD/build-install/install
     - cmake --build build
+  artifacts:
+    paths:
+      - build-install/TUC-*
 
 build-gcc:
   image: registry.gitlab.com/joeblinx/tuc/gcc-cmake:1.0
