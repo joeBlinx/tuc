@@ -1,5 +1,5 @@
 add_executable(test_tuc)
-
+include(${CMAKE_SOURCE_DIR}/src/cmake/tuc.cmake)
 target_link_libraries(test_tuc PRIVATE tuc::tuc)
-add_test(NAME test_tuc COMMAND test_tuc)
 target_sources(test_tuc PRIVATE main.c)
+tuc_discover_test(test_tuc)
