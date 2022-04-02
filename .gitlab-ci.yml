@@ -13,7 +13,13 @@
 .test-tu-script:
   stage: test
   script:
-    - ctest --preset install
+    - ctest --preset install --output-junit test-report.xml
+  artifacts:
+    when: always
+    paths:
+      - build-install/test-report.xml
+    reports:
+      junit: build-install/test-report.xml
 
 .test-package-script:
   stage: test
