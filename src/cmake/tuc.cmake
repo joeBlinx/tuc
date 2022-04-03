@@ -1,4 +1,4 @@
-macro(tuc_discover_test target)
+macro(tuc_discover_tests target)
 get_target_property(sources ${target} SOURCES)
 foreach(source  ${sources})
 	file(STRINGS ${CMAKE_CURRENT_SOURCE_DIR}/${source} tests REGEX "TEST\\(.*\\)")
