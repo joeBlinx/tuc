@@ -59,4 +59,5 @@ write_basic_package_version_file(
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tucConfig.cmake 
 				${CMAKE_CURRENT_BINARY_DIR}/tucConfigVersion.cmake
+				${CMAKE_CURRENT_SOURCE_DIR}/cmake/tuc.cmake
 				DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)

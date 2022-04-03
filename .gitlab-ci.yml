@@ -26,6 +26,7 @@
   script:
     - cmake -S test/export -B build -DINSTALL_DIR=$PWD/build-install/install
     - cmake --build build
+    - cd build && ctest
   artifacts:
     paths:
       - build-install/TUC-*
